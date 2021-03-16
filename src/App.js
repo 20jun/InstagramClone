@@ -12,17 +12,15 @@ import {StatusBar, SafeAreaView} from 'react-native';
 
 import HomeScreen from './screens/HomeScreen';
 
-
 const App: () => React$Node = () => {
-
   return (
     <>
-    <SafeAreaView>
-      <StatusBar barStyle = 'dark-content' />
-      <HomeScreen />
+      <SafeAreaView>
+        <StatusBar barStyle="dark-content" />
+        <HomeScreen />
       </SafeAreaView>
     </>
-      );
+  );
 };
 
 export default App;
