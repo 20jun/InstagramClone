@@ -17,6 +17,7 @@ const Footer = ({ likesCount : likesCountProp, caption, postedAt }) => {
         const amount = isLiked ? -1 : 1;
         setLikesCount(likesCount + amount)
 
+        // 좋아요 버튼 누를 시 색상 변경
         setIsLike(!isLiked);
     }
 

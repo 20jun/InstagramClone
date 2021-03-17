@@ -5,6 +5,7 @@ import Stories from '../Stories';
 
 const data = [
     {
+    id : '1',
     user : {
         imageUri : 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png',
         name : 'me',
@@ -15,6 +16,7 @@ const data = [
     postedAt : '6 minutes ago',
 },
 {
+    id : '2',
     user : {
         imageUri : 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png',
         name : 'me',
@@ -25,6 +27,7 @@ const data = [
     postedAt : '6 minutes ago',
 },
 {
+    id : '3',
     user : {
         imageUri : 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png',
         name : 'me',
@@ -39,6 +42,7 @@ const Feed = () => (
     <FlatList
     data = {data}
     renderItem = {({item}) => <Post post = {item} />} 
+    keyExtractor = {({id}) => id}
     ListHeaderComponent = {Stories}
      />
 );
