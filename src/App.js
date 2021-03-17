@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
-
+//git
 import React from 'react';
 import type {Node} from 'react';
 import {StatusBar, SafeAreaView} from 'react-native';
