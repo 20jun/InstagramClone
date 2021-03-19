@@ -1,50 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {FlatList} from 'react-native';
 import Post from '../Post';
 import Stories from '../UserStoriesPreview';
+import { API, graphqlOperation } from 'aws-amplify';
+import { listPosts } from '../../graphql/queries';
 
-const data = [
-    {
-    id : '1',
-    user : {
-        imageUri : 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png',
-        name : 'me',
-    },
-    imageUri : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR01Qfvbw3Pyhm7YCETjPxa-jCE4jTyIsd4lg&usqp=CAU',
-    caption : 'cute #instagram',
-    likesCount : 1234,
-    postedAt : '6 minutes ago',
-},
-{
-    id : '2',
-    user : {
-        imageUri : 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png',
-        name : 'me',
-    },
-    imageUri : 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png',
-    caption : 'cute #instagram',
-    likesCount : 1234,
-    postedAt : '6 minutes ago',
-},
-{
-    id : '3',
-    user : {
-        imageUri : 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png',
-        name : 'me',
-    },
-    imageUri : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR01Qfvbw3Pyhm7YCETjPxa-jCE4jTyIsd4lg&usqp=CAU',
-    caption : 'cute #instagram',
-    likesCount : 1234,
-    postedAt : '6 minutes ago',
-},
-]
-const Feed = () => (
+
+const Feed = () => {
+
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const fetchPosts = async () => {
+        try {
+            const postsData = await API.graphql(graphqlOperation(listPosts));
+            setPosts(postsData.data.listPosts.items);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+    return (
     <FlatList
-    data = {data}
+    data = {posts}
     renderItem = {({item}) => <Post post = {item} />} 
     keyExtractor = {({id}) => id}
     ListHeaderComponent = {Stories}
      />
-);
+     )
+    }
 
 export default Feed;

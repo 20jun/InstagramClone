@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import styles from './styles';
 
 const Header = ({imageUri, name}) => (
+
     <View style = {styles.container}>
         <View style = {styles.left}>
             <ProfilePicture uri = {imageUri} size = {40} />
