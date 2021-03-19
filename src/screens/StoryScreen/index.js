@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { 
+    View,
     Text, 
     SafeAreaView, 
     ImageBackground, 
-    ActivityIndicator, 
+    ActivityIndicator,
+    TextInput,
     TouchableWithoutFeedback,
     Dimensions,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import storiesData from '../../data/stories';
+import ProfilePicture from '../../components/ProfilePicture';
+import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import styles from './styles';
 
@@ -19,6 +24,8 @@ const StoryScreen = () => {
 
 
     const route = useRoute();
+    const navigation = useNavigation();
+    const userId = route.params.userId;
 
     // useEffect(function, deps)
     // - function : 수행하고자 하는 작업
@@ -26,9 +33,7 @@ const StoryScreen = () => {
 
     // 빈 배열을 넣을 시 컴포넌트가 화면에 가장 처음 렌더링 될 때 한 번만 실행
     useEffect(() => {
-        const userId = route.params.userId;
         const userStories = storiesData.find(storyData => storyData.user.id === userId);
-        console.log(userStories);
         setUserStories(userStories);
         setActiveStoryIndex(0);
     }, []);
@@ -53,9 +58,17 @@ const StoryScreen = () => {
     // }, [activeStoryIndex]);
     // 아래 코드로 인해 사용할 필요가 없어졌음!
 
+    const navigateToNextUser = () => {
+        navigation.push('Story', { userId : (parseInt(userId) + 1).toString() });
+    }
+
+    const navigateToPrevUser = () => {
+        navigation.push('Story', { userId : (parseInt(userId) - 1).toString() });
+    }
     const handleNextStory = () => {
         if (activeStoryIndex >= userStories.stories.length - 1) 
         {
+            navigateToNextUser();
             return;
         }
         setActiveStoryIndex(activeStoryIndex + 1);
@@ -64,11 +77,12 @@ const StoryScreen = () => {
     const handlePrevStory = () => {
         if (activeStoryIndex <= 0)
         {
+            navigateToPrevUser();
             return;
         }
         setActiveStoryIndex(activeStoryIndex - 1);
 
-    };
+    }
 
     const handlePress = (evt) => {
 
@@ -97,6 +111,27 @@ const StoryScreen = () => {
         <SafeAreaView style = {styles.container}>
             <TouchableWithoutFeedback onPress = {handlePress}>
                 <ImageBackground style = {styles.image} source = {{uri : activeStory.imageUri}}>
+                    <View style = {styles.userInfo}>
+                        <ProfilePicture uri = {userStories.user.imageUri} size = {50}/>
+                        <Text style = {styles.userName}>{userStories.user.name}</Text>
+                        <Text style = {styles.postedTime}>{activeStory.postedTime}</Text>
+                    </View>
+                    <View style = {styles.bottomContainer}>
+                        <View style = {styles.cameraButton}>
+                            <Feather name = 'camera' size = {30} color = {'#ffffff'}/>
+                        </View>
+                        <View style = {styles.textInputContainer}>
+                            <TextInput 
+                            style = {styles.textInput}
+                            editable 
+                            placeholder = 'Send message'
+                            placeholderTextColor = {'white'}
+                            />
+                        </View>
+                        <View style = {styles.messageButton}>
+                            <Ionicons name = 'paper-plane-outline' size = {35} color = {'#ffffff'} />
+                        </View>
+                    </View>
                 </ImageBackground>
             </TouchableWithoutFeedback>
     </SafeAreaView>
