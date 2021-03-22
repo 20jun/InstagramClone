@@ -16,6 +16,7 @@ const Feed = () => {
 
     const fetchPosts = async () => {
         try {
+            // await 사용하여 데이터 불러오는 시간 벌기
             const postsData = await API.graphql(graphqlOperation(listPosts));
             setPosts(postsData.data.listPosts.items);
         } catch (e) {

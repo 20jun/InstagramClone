@@ -17,6 +17,8 @@ import Router from './router';
 
 const App: () => React$Node = () => {
   return (
+    // navigation tree 관리
+    // 일반적으로 이 컴포넌트를 App.js에서 렌더링 함
     <NavigationContainer>
         <StatusBar barStyle="dark-content" />
         <Router />

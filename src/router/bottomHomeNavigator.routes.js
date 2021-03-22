@@ -14,7 +14,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
  
-
+// 인스타그램 하단 메뉴(홈, 검색, 게시물등록, 좋아요, 프로필)
 const BottomHomeNavigator = () => (
 <Tab.Navigator
         screenOptions = {({route}) => ({
